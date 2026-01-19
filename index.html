@@ -1,205 +1,313 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Linux Labs Study Notes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>LFCS – Unix Commands & Utilities</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
-    /* =======================
-       THEME VARIABLES
-       ======================= */
-    :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --accent: #38bdf8;
-      --done: #22c55e;
-      --border: #1f2933;
-      --code: #020617;
-    }
-
-    [data-theme="light"] {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #475569;
-      --accent: #0284c7;
-      --done: #16a34a;
-      --border: #e5e7eb;
-      --code: #e2e8f0;
-    }
-
-    /* =======================
-       GLOBAL STYLES
-       ======================= */
     * {
       box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      transition: background 0.3s ease, color 0.3s ease;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #1f2937;
+      background: #ffffff;
+      display: flex;
     }
 
-    /* =======================
-       HEADER
-       ======================= */
-    header {
-      padding: 3rem 1.5rem;
-      text-align: center;
-      position: relative;
-      border-bottom: 1px solid var(--border);
+    /* ===== Sidebar ===== */
+    .sidebar {
+      width: 260px;
+      background: #0f172a;
+      color: #e5e7eb;
+      height: 100vh;
+      position: fixed;
+      padding: 24px 18px;
+      overflow-y: auto;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #60a5fa;
     }
 
-    header p {
-      color: var(--muted);
-      max-width: 700px;
-      margin: 1rem auto 0;
+    .sidebar a {
+      display: block;
+      color: #e5e7eb;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      margin-bottom: 6px;
     }
 
-    /* =======================
-       TOGGLE BUTTON
-       ======================= */
-    .theme-toggle {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.5rem 0.9rem;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
+    .sidebar a:hover {
+      background: #1e293b;
     }
 
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+    /* ===== Content ===== */
+    .content {
+      margin-left: 260px;
+      padding: 40px 60px;
+      max-width: 1000px;
     }
 
-    /* =======================
-       CONTENT
-       ======================= */
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 2rem 1.5rem 4rem;
-    }
-
-    section {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    section:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
     }
 
     h2 {
-      margin-top: 0;
-      font-size: 1.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      font-size: 24px;
+      margin-top: 50px;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 6px;
     }
 
-    .done {
-      color: var(--done);
-      font-size: 0.85rem;
-      border: 1px solid rgba(34,197,94,0.4);
-      padding: 0.1rem 0.5rem;
-      border-radius: 999px;
+    h3 {
+      margin-top: 25px;
+      font-size: 18px;
+    }
+
+    p {
+      line-height: 1.7;
+      margin: 12px 0;
     }
 
     ul {
-      padding-left: 1.2rem;
+      margin-left: 20px;
+      line-height: 1.7;
     }
 
-    li {
-      margin-bottom: 0.4rem;
-      color: var(--muted);
-    }
-
-    code, pre {
-      background: var(--code);
-      border-radius: 8px;
-      padding: 0.4rem 0.6rem;
-      font-size: 0.9rem;
+    code {
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+      font-size: 14px;
     }
 
     pre {
+      background: #020617;
+      color: #e5e7eb;
+      padding: 16px;
+      border-radius: 8px;
       overflow-x: auto;
-      margin: 1rem 0;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .note {
+      background: #eff6ff;
+      border-left: 5px solid #3b82f6;
+      padding: 14px;
+      margin: 20px 0;
     }
 
     footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
+      margin-top: 80px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        display: none;
+      }
+
+      .content {
+        margin-left: 0;
+        padding: 30px;
+      }
     }
   </style>
 </head>
 
 <body>
-<header>
-  <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
-  <h1>LFCS Notes</h1>
-  <p>
-    One-page Linux reference for LFCS. If I understand the concepts and LFCS is key
-  </p>
-</header>
 
-<main>
-  <!-- (Labs content stays the same as before) -->
-</main>
+<!-- ===== Sidebar ===== -->
+<nav class="sidebar">
+  <h2>LFCS Objectives</h2>
+  <a href="#login">Login & SSH</a>
+  <a href="#docs">System Documentation</a>
+  <a href="#files">Files & Directories</a>
+  <a href="#links">Hard & Soft Links</a>
+  <a href="#permissions">Permissions</a>
+  <a href="#suid">SUID / SGID</a>
+  <a href="#find">Find</a>
+  <a href="#text">Text Processing</a>
+  <a href="#grep">Grep & Regex</a>
+  <a href="#archive">Archiving</a>
+  <a href="#sync">Sync & Imaging</a>
+  <a href="#redirect">Redirection</a>
+  <a href="#ssl">SSL / TLS</a>
+  <a href="#git">Git Basics</a>
+</nav>
+
+<!-- ===== Main Content ===== -->
+<main class="content">
+
+<h1>Unix Commands & Utilities</h1>
+<p>
+A practical LFCS-style reference covering the Unix commands and utilities you will
+encounter most frequently as a Linux system administrator.
+</p>
+
+<section id="login">
+  <h2>Log in to Local & Remote Consoles</h2>
+  <p>
+    Secure remote access is performed using <strong>SSH</strong>, which encrypts credentials
+    and protects against eavesdropping.
+  </p>
+
+  <pre>
+ssh user@host
+ssh -v user@host
+ssh -V
+  </pre>
+</section>
+
+<section id="docs">
+  <h2>Read and Use System Documentation</h2>
+  <pre>
+man ls
+man -k network
+apropos disk
+sudo mandb
+  </pre>
+</section>
+
+<section id="files">
+  <h2>Create, Delete, Copy, and Move Files</h2>
+  <pre>
+ls -lah
+pwd
+mkdir lfcs
+touch lfcs.txt
+cp -ar /tmp/invoice /home/bob
+rm -rf /home/bob/lfcs
+  </pre>
+</section>
+
+<section id="links">
+  <h2>Create and Manage Links</h2>
+
+  <div class="note">
+    Hard links share the same inode.  
+    Soft links act as aliases and can link directories.
+  </div>
+
+  <pre>
+ln file1 file2
+ln -s /tmp /home/bob/link_to_tmp
+  </pre>
+</section>
+
+<section id="permissions">
+  <h2>List, Set, and Change Permissions</h2>
+  <pre>
+chmod 644 file
+chmod go+r file
+chown -R alice:developers /path
+  </pre>
+</section>
+
+<section id="suid">
+  <h2>SUID, SGID, and Sticky Bit</h2>
+  <pre>
+chmod u+s,g+s,o+t /home/bob/datadir
+  </pre>
+</section>
+
+<section id="find">
+  <h2>Search for Files</h2>
+  <pre>
+find . -name file.txt
+find -mmin -5
+find -perm 664
+sudo find /usr -size +5M -size -10M
+  </pre>
+</section>
+
+<section id="text">
+  <h2>Compare and Manipulate File Content</h2>
+  <pre>
+head -5 file
+tail file
+sed 's/canda/canada/g' userinfo.txt
+cut -d',' -f3 userinfo.txt
+uniq countries.txt
+  </pre>
+</section>
+
+<section id="grep">
+  <h2>Search Files with Grep & Regex</h2>
+  <pre>
+grep 'password' /etc/ssh/sshd_config
+grep -ri 'password' /etc
+grep '^#' /etc/login.defs
+egrep '/dev/.*' /etc
+  </pre>
+</section>
+
+<section id="archive">
+  <h2>Archive, Backup, and Compress</h2>
+  <pre>
+tar cf archive.tar file
+tar xf archive.tar
+tar czf archive.tar.gz file
+zip -r archive.zip dir/
+  </pre>
+</section>
+
+<section id="sync">
+  <h2>Sync Directories & Disk Imaging</h2>
+  <pre>
+rsync -a dir/ user@host:/path/
+sudo dd if=/dev/vda of=diskimage.raw bs=1M status=progress
+  </pre>
+</section>
+
+<section id="redirect">
+  <h2>Input & Output Redirection</h2>
+  <pre>
+command > output.txt
+command 2> error.txt
+command > all.txt 2>&1
+  </pre>
+</section>
+
+<section id="ssl">
+  <h2>Working with SSL / TLS</h2>
+  <pre>
+openssl req -newkey rsa:2048 -keyout key.pem -out req.pem
+openssl req -x509 -newkey rsa:4096 -days 365
+  </pre>
+</section>
+
+<section id="git">
+  <h2>Git Basic Operations</h2>
+  <pre>
+git init
+git add .
+git commit -m "Initial commit"
+git branch feature
+git checkout feature
+git merge feature
+git log
+  </pre>
+</section>
 
 <footer>
-  Built as a personal Linux reference.
+  <p>LFCS Study Notes • Built by Warsame Osman</p>
 </footer>
 
-<script>
-  const toggleBtn = document.querySelector('.theme-toggle');
-  const root = document.documentElement;
-
-  function toggleTheme() {
-    const currentTheme = root.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-    root.setAttribute('data-theme', newTheme);
-    toggleBtn.textContent = newTheme === 'dark' ? '🌙 Dark' : '☀️ Light';
-
-    localStorage.setItem('theme', newTheme);
-  }
-
-  // Load saved theme
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    root.setAttribute('data-theme', savedTheme);
-    toggleBtn.textContent = savedTheme === 'dark' ? '🌙 Dark' : '☀️ Light';
-  }
-</script>
-
+</main>
 </body>
 </html>
-
-
-
