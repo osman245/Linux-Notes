@@ -1,435 +1,670 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>LFCS<span class="subtitle">Linux Foundation Certified System Administrator</span> - Linux Foundation Certified System Administrator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LFCS – Linux Foundation Certified System Administrator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d14;
+    --surface: #111520;
+    --surface2: #161b28;
+    --border: #1e2635;
+    --accent: #00e5a0;
+    --accent2: #0070f3;
+    --warn: #f59e0b;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --code-bg: #0d111c;
+    --radius: 10px;
+  }
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <style>
-    :root {
-      --bg: #0f172a;
-      --card: #111827;
-      --primary: #38bdf8;
-      --secondary: #22c55e;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-    }
+  html { scroll-behavior: smooth; }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-    }
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    padding: 5rem 1.5rem 4rem;
+    text-align: center;
+    overflow: hidden;
+  }
 
-    header {
-      padding: 3rem 1rem 2.5rem;
-      text-align: center;
-      background: #020617;
-    }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0,229,160,.15) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(0,112,243,.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
 
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: 1px;
-      background: linear-gradient(90deg, #38bdf8, #22c55e);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
 
-    header p {
-      color: var(--muted);
-      font-size: 1.1rem;
-    }
+  .badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(0,229,160,.3);
+    border-radius: 999px;
+    padding: .25rem .85rem;
+    margin-bottom: 1.25rem;
+    backdrop-filter: blur(6px);
+    background: rgba(0,229,160,.06);
+  }
 
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(2, 6, 23, 0.95);
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      border-bottom: 1px solid #1f2937;
-    }
+  h1 {
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 800;
+    letter-spacing: -.03em;
+    line-height: 1;
+    background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: .75rem;
+  }
 
-    nav a {
-      color: var(--text);
-      padding: 1rem 1.25rem;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s, background 0.3s;
-    }
+  .subtitle {
+    font-size: clamp(.85rem, 2.5vw, 1.1rem);
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
 
-    nav a:hover {
-      color: var(--primary);
-      background: rgba(56, 189, 248, 0.1);
-    }
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,13,20,.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: .6rem 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
 
-    main {
-      max-width: 1200px;
-      margin: auto;
-      padding: 2rem 1.5rem 4rem;
-      display: grid;
-      gap: 2.5rem;
-    }
+  nav ul {
+    display: flex;
+    gap: .35rem;
+    list-style: none;
+    min-width: max-content;
+    justify-content: center;
+  }
 
-    section {
-      background: #020617;
-      border: 1px solid #1f2937;
-      border-radius: 16px;
-      padding: 2.5rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    }
+  nav a {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem;
+    letter-spacing: .06em;
+    color: var(--muted);
+    text-decoration: none;
+    padding: .4rem .9rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  nav a:hover {
+    color: var(--accent);
+    border-color: rgba(0,229,160,.25);
+    background: rgba(0,229,160,.07);
+  }
 
-    section:hover {
-      transform: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-    }
+  /* ── MAIN ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
 
-    h2 {
-      font-size: 1.9rem;
-      margin-bottom: 0.75rem;
-      color: var(--primary);
-    }
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 3.5rem;
+    animation: fadeUp .5s ease both;
+  }
 
-    section p {
-      color: var(--muted);
-      margin-bottom: 1.25rem;
-    }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    ul {
-      padding-left: 1.2rem;
-    }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: .85rem;
+    border-bottom: 1px solid var(--border);
+  }
 
-    li {
-      margin-bottom: 0.6rem;
-    }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem;
+    color: var(--accent);
+    background: rgba(0,229,160,.1);
+    border: 1px solid rgba(0,229,160,.2);
+    border-radius: 6px;
+    padding: .2rem .5rem;
+    flex-shrink: 0;
+  }
 
-    code {
-      background: #020617;
-      padding: 0.25rem 0.4rem;
-      border-radius: 6px;
-      color: var(--secondary);
-      font-size: 0.95rem;
-    }
+  h2 {
+    font-size: clamp(1.35rem, 4vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    color: #fff;
+  }
 
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      color: var(--muted);
-      border-top: 1px solid #1f2937;
-    }
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 1rem;
+  }
 
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2.1rem;
-      }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .card:hover {
+    border-color: rgba(0,229,160,.3);
+    transform: translateY(-2px);
+  }
 
-      nav a {
-        padding: 0.75rem 1rem;
-        font-size: 0.95rem;
-      }
+  h3 {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .02em;
+    margin-bottom: .75rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  h3::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 14px;
+    background: var(--accent);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
 
-      section {
-        padding: 1.5rem;
-      }
-    }
+  /* Summary block */
+  .summary {
+    font-size: .8rem;
+    color: var(--muted);
+    background: var(--code-bg);
+    border-left: 3px solid var(--accent2);
+    border-radius: 0 6px 6px 0;
+    padding: .6rem .85rem;
+    margin-bottom: .85rem;
+    line-height: 1.55;
+  }
 
-      section {
-        padding: 1.8rem;
-      }
-    }
-  </style>
+  /* Commands list */
+  ul.cmds {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+  }
+  ul.cmds li {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: .35rem .65rem;
+    color: #a5f3c0;
+    word-break: break-all;
+    line-height: 1.45;
+  }
+  ul.cmds li:hover {
+    border-color: rgba(0,229,160,.3);
+    background: rgba(0,229,160,.05);
+  }
+
+  /* Bullet lists */
+  ul.bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+  }
+  ul.bullets li {
+    font-size: .88rem;
+    color: #94a3b8;
+    padding-left: 1.1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+  ul.bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  ul.bullets code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .78rem;
+    background: rgba(0,229,160,.1);
+    color: var(--accent);
+    padding: .1rem .35rem;
+    border-radius: 3px;
+  }
+
+  /* PDF link */
+  .pdf-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem;
+    color: var(--warn);
+    border: 1px solid rgba(245,158,11,.25);
+    border-radius: 6px;
+    padding: .4rem 1rem;
+    text-decoration: none;
+    transition: all .2s;
+    background: rgba(245,158,11,.05);
+  }
+  .pdf-link:hover {
+    background: rgba(245,158,11,.12);
+    border-color: rgba(245,158,11,.5);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .72rem;
+    color: var(--muted);
+    letter-spacing: .06em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    header { padding: 3.5rem 1rem 2.5rem; }
+    main { padding: 1.5rem 1rem 3rem; }
+    .card-grid { grid-template-columns: 1fr; }
+    nav ul { justify-content: flex-start; }
+  }
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>LFCS</h1>
-    <p>Linux Foundation Certified System Administrator Study Guide</p>
-  </header>
+<header>
+  <div class="grid-bg"></div>
+  <p class="badge">Study Guide v2026</p>
+  <h1>LFCS</h1>
+  <p class="subtitle">Linux Foundation Certified System Administrator</p>
+</header>
 
-  <nav>
-    <a href="#essential">Essential Commands</a>
-    <a href="#operations">Operations Deployment</a>
-    <a href="#users">Users & Groups</a>
-    <a href="#networking">Networking</a>
-    <a href="#storage">Storage</a>
-  </nav>
-
-  <main>
-
-    <section id="essential">
-  <h2>Essential Commands</h2>
-  <p>This section covers the core Linux commands required for daily system administration and heavily tested in the LFCS exam.</p>
-
-  <h3>File and Directory Management</h3>
+<nav>
   <ul>
-    <li>Listing files with <code>ls -l</code>, <code>ls -a</code>, and recursive listings</li>
-    <li>Creating and removing files using <code>touch</code> and <code>rm</code></li>
-    <li>Copying and moving files with <code>cp</code> and <code>mv</code></li>
-    <li>Directory creation and removal using <code>mkdir</code> and <code>rmdir</code></li>
+    <li><a href="#essential">Essential Commands</a></li>
+    <li><a href="#operations">Operations & Deployment</a></li>
+    <li><a href="#users">Users & Groups</a></li>
+    <li><a href="#networking">Networking</a></li>
+    <li><a href="#storage">Storage</a></li>
   </ul>
+</nav>
 
-  <h3>Viewing and Editing Files</h3>
-  <ul>
-    <li>Viewing files with <code>cat</code>, <code>less</code>, and <code>head</code>/<code>tail</code></li>
-    <li>Searching text using <code>grep</code> with regular expressions</li>
-    <li>Stream editing with <code>sed</code></li>
-    <li>Column-based processing using <code>awk</code></li>
-  </ul>
+<main>
 
-  <h3>Permissions and Ownership</h3>
-  <ul>
-    <li>Understanding read, write, and execute permissions</li>
-    <li>Changing permissions with symbolic and numeric modes</li>
-    <li>Changing ownership using <code>chown</code> and <code>chgrp</code></li>
-    <li>Default permissions and <code>umask</code></li>
-  </ul>
-  <p style="margin-top:30px;"><a href="#" style="color:#38bdf8; font-weight:600;">📄 For more notes (PDF)</a></p>
-</section>
+  <!-- ESSENTIAL COMMANDS -->
+  <section class="section" id="essential">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2>Essential Commands</h2>
+    </div>
+    <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Core Linux commands required for daily system administration and heavily tested in the LFCS exam.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>File & Directory Management</h3>
+        <ul class="bullets">
+          <li>Listing files with <code>ls -l</code>, <code>ls -a</code>, and recursive listings</li>
+          <li>Creating and removing files using <code>touch</code> and <code>rm</code></li>
+          <li>Copying and moving files with <code>cp</code> and <code>mv</code></li>
+          <li>Directory creation and removal using <code>mkdir</code> and <code>rmdir</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Viewing & Editing Files</h3>
+        <ul class="bullets">
+          <li>Viewing files with <code>cat</code>, <code>less</code>, and <code>head</code>/<code>tail</code></li>
+          <li>Searching text using <code>grep</code> with regular expressions</li>
+          <li>Stream editing with <code>sed</code></li>
+          <li>Column-based processing using <code>awk</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Permissions & Ownership</h3>
+        <ul class="bullets">
+          <li>Understanding read, write, and execute permissions</li>
+          <li>Changing permissions with symbolic and numeric modes</li>
+          <li>Changing ownership using <code>chown</code> and <code>chgrp</code></li>
+          <li>Default permissions and <code>umask</code></li>
+        </ul>
+      </div>
+    </div>
+    <a href="#" class="pdf-link">📄 More notes (PDF)</a>
+  </section>
 
-    <section id="operations">
-  <h2>Operations Deployment</h2>
-  <p>This section focuses on console access, documentation usage, file management, permissions, text processing, archiving, networking security, redirection, and version control fundamentals required for real-world Linux administration.</p>
+  <!-- OPERATIONS & DEPLOYMENT -->
+  <section class="section" id="operations">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2>Operations &amp; Deployment</h2>
+    </div>
+    <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Console access, file management, text processing, archiving, networking security, and version control fundamentals.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Console Access &amp; SSH</h3>
+        <p class="summary">Access locally or remotely. Remote access must be secured via SSH to encrypt credentials in transit.</p>
+        <ul class="cmds">
+          <li>ssh -V</li>
+          <li>ssh username@node</li>
+          <li>sudo -v ssh@alex</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>System Documentation</h3>
+        <p class="summary">Use <code>--help</code> and <code>man</code>. Search manuals with <code>man -k</code>. Update index with <code>mandb</code>.</p>
+        <ul class="cmds">
+          <li>man -k keyword</li>
+          <li>mandb</li>
+          <li>sudo mandb</li>
+          <li>sudo hostnamectl set-hostname web-server-01</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>File &amp; Directory Management</h3>
+        <p class="summary">Create, copy, move and remove files and directories using core commands.</p>
+        <ul class="cmds">
+          <li>ls -lah</li>
+          <li>cp -ar /tmp/invoice /home/bob</li>
+          <li>rm -rf /home/bob/lfcs</li>
+          <li>mkdir -p /1/2/3/4</li>
+          <li>ls --full-time</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Links (Hard &amp; Soft)</h3>
+        <p class="summary">Hard links point to the same inode. Soft links act as aliases and can cross filesystems.</p>
+        <ul class="cmds">
+          <li>ln -s /tmp /home/bob/link_to_tmp</li>
+          <li>ln /tmp /home/bob/link_to_tmp</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Permissions &amp; Special Bits</h3>
+        <p class="summary">Modify permissions using numeric or symbolic modes. Special permissions: SUID, SGID, Sticky Bit.</p>
+        <ul class="cmds">
+          <li>chmod 644 filename</li>
+          <li>chown -R alice:developers /path/to/directory</li>
+          <li>chmod go+r filename</li>
+          <li>chmod u+s,g+s,o+t /home/bob/datadir</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Finding Files</h3>
+        <ul class="cmds">
+          <li>find -name file1.txt</li>
+          <li>find -mmin -5</li>
+          <li>find -name "f*" -size +512k</li>
+          <li>sudo find /usr -type f -size +5M -size -10M > /home/bob/size.txt</li>
+          <li>find . -perm 664</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Text Processing</h3>
+        <ul class="cmds">
+          <li>head -5 myfile</li>
+          <li>tail -n 10 /var/log/apt/term.log</li>
+          <li>sed 's/canda/canada/g' userinfo.txt</li>
+          <li>cut -d ' ' -f 1 userinfo.txt</li>
+          <li>uniq countries.txt</li>
+          <li>diff -c file1 file2</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Grep &amp; Regex</h3>
+        <ul class="cmds">
+          <li>grep -rwi 'password' /etc/ssh/sshd_config</li>
+          <li>grep -w '7' /etc/login.defs</li>
+          <li>egrep -r '0{3,}' /etc/</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Archiving &amp; Compression</h3>
+        <ul class="cmds">
+          <li>tar -tf archive.tar</li>
+          <li>tar czf archive.tar.gz file1</li>
+          <li>zip -r archive.zip Pictures/</li>
+          <li>gzip file1</li>
+          <li>bzip2 file2</li>
+          <li>xz file3</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Rsync &amp; Remote Sync</h3>
+        <ul class="cmds">
+          <li>rsync -a Pictures/ aaron@9.9.9.9:/home/aaron/Pictures/</li>
+          <li>rsync -a aaron@9.9.9.9:/home/aaron/Pictures/ .</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Redirection &amp; Streams</h3>
+        <ul class="cmds">
+          <li>date > file.txt</li>
+          <li>grep -r '^The' /etc/ 2>/dev/null</li>
+          <li>stdin (&lt;), stdout (1>), stderr (2>)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>SSL / TLS with OpenSSL</h3>
+        <ul class="cmds">
+          <li>man openssl</li>
+          <li>openssl req -newkey rsa:2048 -keyout key.pem -out req.pem</li>
+          <li>openssl req -x509 -noenc -newkey rsa:4096 -days 365</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Version Control (Git)</h3>
+        <ul class="cmds">
+          <li>sudo apt install git</li>
+          <li>git init</li>
+          <li>git add .</li>
+          <li>git commit -m "changes"</li>
+          <li>git branch 1.1-testing</li>
+          <li>git switch 1.1-testing</li>
+          <li>git merge 1.1-testing</li>
+          <li>git remote -v</li>
+          <li>ssh-keygen</li>
+          <li>git log</li>
+        </ul>
+      </div>
+    </div>
+    <a href="#" class="pdf-link">📄 More notes (PDF)</a>
+  </section>
 
-  <h3>Console Access & SSH</h3>
-  <p><strong>Summary:</strong> To access the console you can log in locally or remotely. Remote access must be secured using SSH so credentials are encrypted in transit and protected from eavesdropping and cyber attacks.</p>
-  <ul>
-    <li><code>CMD</code> – Open console</li>
-    <li><code>ssh -V</code> – Display SSH version</li>
-    <li><code>ssh username@node</code> – Connect to remote server</li>
-    <li><code>sudo -v ssh@alex</code> – Verbose troubleshooting output</li>
-  </ul>
+  <!-- USERS & GROUPS -->
+  <section class="section" id="users">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2>Users &amp; Groups</h2>
+    </div>
+    <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Proper user and group management is essential for system security and access control.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>User Management</h3>
+        <ul class="bullets">
+          <li>Creating users with <code>useradd</code></li>
+          <li>Modifying user accounts with <code>usermod</code></li>
+          <li>Removing users using <code>userdel</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Group Management</h3>
+        <ul class="bullets">
+          <li>Creating and deleting groups</li>
+          <li>Adding users to supplementary groups</li>
+          <li>Understanding primary vs secondary groups</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Password &amp; Authentication</h3>
+        <ul class="bullets">
+          <li>Password aging and expiration policies</li>
+          <li>Account locking and unlocking</li>
+          <li>Introduction to PAM</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>System Files</h3>
+        <ul class="bullets">
+          <li><code>/etc/passwd</code> structure</li>
+          <li><code>/etc/shadow</code> security considerations</li>
+          <li><code>/etc/group</code> usage</li>
+        </ul>
+      </div>
+    </div>
+    <a href="#" class="pdf-link">📄 More notes (PDF)</a>
+  </section>
 
-  <h3>System Documentation</h3>
-  <p><strong>Summary:</strong> Use built-in documentation tools like <code>--help</code> and <code>man</code>. Search manuals with <code>man -k</code> (apropos). Update manual index with <code>mandb</code> or <code>sudo mandb</code> system-wide.</p>
-  <ul>
-    <li><code>man -k keyword</code></li>
-    <li><code>mandb</code></li>
-    <li><code>sudo mandb</code></li>
-    <li><code>sudo hostnamectl set-hostname web-server-01</code></li>
-  </ul>
+  <!-- NETWORKING -->
+  <section class="section" id="networking">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2>Networking</h2>
+    </div>
+    <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Networking skills are critical for configuring and troubleshooting Linux servers.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Network Configuration</h3>
+        <ul class="bullets">
+          <li>Assigning IP addresses</li>
+          <li>Configuring gateways and routes</li>
+          <li>Understanding DHCP vs static configuration</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Network Tools</h3>
+        <ul class="bullets">
+          <li>Testing connectivity with <code>ping</code></li>
+          <li>Inspecting sockets using <code>ss</code></li>
+          <li>Checking interfaces and routes</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Firewall Basics</h3>
+        <ul class="bullets">
+          <li>Understanding packet filtering</li>
+          <li>Allowing and blocking traffic</li>
+          <li>Basic security concepts</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>DNS &amp; Hostnames</h3>
+        <ul class="bullets">
+          <li>Hostname configuration</li>
+          <li>DNS resolution process</li>
+          <li>Troubleshooting name resolution</li>
+        </ul>
+      </div>
+    </div>
+    <a href="#" class="pdf-link">📄 More notes (PDF)</a>
+  </section>
 
-  <h3>File & Directory Management</h3>
-  <p><strong>Summary:</strong> Create, copy, move and remove files and directories using core commands.</p>
-  <ul>
-    <li><code>ls -lah</code></li>
-    <li><code>pwd</code></li>
-    <li><code>cd ~/../</code></li>
-    <li><code>mkdir lfcs</code></li>
-    <li><code>touch lfcs.txt</code></li>
-    <li><code>cp -ar /tmp/invoice /home/bob</code></li>
-    <li><code>rm -rf /home/bob/lfcs</code></li>
-    <li><code>mkdir -p /1/2/3/4</code></li>
-    <li><code>ls --full-time</code></li>
-  </ul>
+  <!-- STORAGE -->
+  <section class="section" id="storage">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2>Storage</h2>
+    </div>
+    <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Disk management and filesystem administration for production Linux environments.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Disk Management</h3>
+        <ul class="bullets">
+          <li>Identifying disks and partitions</li>
+          <li>Partitioning tools and concepts</li>
+          <li>Understanding disk layouts</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Filesystems</h3>
+        <ul class="bullets">
+          <li>Creating filesystems</li>
+          <li>Mounting and unmounting filesystems</li>
+          <li>Persistent mounts using configuration files</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Logical Volume Manager</h3>
+        <ul class="bullets">
+          <li>Physical volumes, volume groups, logical volumes</li>
+          <li>Extending and reducing storage</li>
+          <li>Snapshots and use cases</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Swap &amp; Disk Usage</h3>
+        <ul class="bullets">
+          <li>Swap creation and management</li>
+          <li>Monitoring disk usage</li>
+          <li>Filesystem health checks</li>
+        </ul>
+      </div>
+    </div>
+    <a href="#" class="pdf-link">📄 More notes (PDF)</a>
+  </section>
 
-  <h3>Links (Hard & Soft)</h3>
-  <p><strong>Summary:</strong> Hard links point to the same inode. Soft links act as aliases and can cross filesystems.</p>
-  <ul>
-    <li><code>ln -s /tmp /home/bob/link_to_tmp</code></li>
-    <li><code>ln /tmp /home/bob/link_to_tmp</code></li>
-  </ul>
+</main>
 
-  <h3>Permissions & Special Bits</h3>
-  <p><strong>Summary:</strong> Modify permissions using numeric or symbolic modes. Special permissions include SUID, SGID, and Sticky Bit.</p>
-  <ul>
-    <li><code>chmod 644 filename</code></li>
-    <li><code>chown -R alice:developers /path/to/directory</code></li>
-    <li><code>chmod go+r filename</code></li>
-    <li><code>chmod u+s,g+s,o+t /home/bob/datadir</code></li>
-  </ul>
-
-  <h3>Finding Files</h3>
-  <ul>
-    <li><code>find -name file1.txt</code></li>
-    <li><code>find -mmin -5</code></li>
-    <li><code>find -name "f*" -size +512k</code></li>
-    <li><code>sudo find /usr -type f -size +5M -size -10M > /home/bob/size.txt</code></li>
-    <li><code>find . -perm 664</code></li>
-  </ul>
-
-  <h3>Text Processing</h3>
-  <ul>
-    <li><code>head -5 myfile</code></li>
-    <li><code>tail -n 10 /var/log/apt/term.log</code></li>
-    <li><code>sed 's/canda/canada/g' userinfo.txt</code></li>
-    <li><code>cut -d ' ' -f 1 userinfo.txt</code></li>
-    <li><code>uniq countries.txt</code></li>
-    <li><code>diff -c file1 file2</code></li>
-  </ul>
-
-  <h3>Grep & Regular Expressions</h3>
-  <ul>
-    <li><code>grep -rwi 'password' /etc/ssh/sshd_config</code></li>
-    <li><code>grep -w '7' /etc/login.defs</code></li>
-    <li><code>egrep -r '0{3,}' /etc/</code></li>
-  </ul>
-
-  <h3>Archiving & Compression</h3>
-  <ul>
-    <li><code>tar -tf archive.tar</code></li>
-    <li><code>tar czf archive.tar.gz file1</code></li>
-    <li><code>zip -r archive.zip Pictures/</code></li>
-    <li><code>gzip file1</code></li>
-    <li><code>bzip2 file2</code></li>
-    <li><code>xz file3</code></li>
-  </ul>
-
-  <h3>Rsync & Remote Sync</h3>
-  <ul>
-    <li><code>rsync -a Pictures/ aaron@9.9.9.9:/home/aaron/Pictures/</code></li>
-    <li><code>rsync -a aaron@9.9.9.9:/home/aaron/Pictures/ .</code></li>
-  </ul>
-
-  <h3>Redirection & Streams</h3>
-  <ul>
-    <li><code>date > file.txt</code></li>
-    <li><code>grep -r '^The' /etc/ 2>/dev/null</code></li>
-    <li>stdin (&lt;), stdout (1&gt;), stderr (2&gt;)</li>
-  </ul>
-
-  <h3>SSL / TLS with OpenSSL</h3>
-  <ul>
-    <li><code>man openssl</code></li>
-    <li><code>openssl req -newkey rsa:2048 -keyout key.pem -out req.pem</code></li>
-    <li><code>openssl req -x509 -noenc -newkey rsa:4096 -days 365</code></li>
-  </ul>
-
-  <h3>Version Control (Git)</h3>
-  <ul>
-    <li><code>sudo apt install git</code></li>
-    <li><code>git init</code></li>
-    <li><code>git add .</code></li>
-    <li><code>git commit -m "changes"</code></li>
-    <li><code>git branch 1.1-testing</code></li>
-    <li><code>git switch 1.1-testing</code></li>
-    <li><code>git merge 1.1-testing</code></li>
-    <li><code>git remote -v</code></li>
-    <li><code>ssh-keygen</code></li>
-    <li><code>git log</code></li>
-  </ul>
-  <p style="margin-top:30px;"><a href="#" style="color:#38bdf8; font-weight:600;">📄 For more notes (PDF)</a></p>
-</section>
-
-    <section id="users">
-  <h2>Users and Groups</h2>
-  <p>Proper user and group management is essential for system security and access control.</p>
-
-  <h3>User Management</h3>
-  <ul>
-    <li>Creating users with <code>useradd</code></li>
-    <li>Modifying user accounts with <code>usermod</code></li>
-    <li>Removing users using <code>userdel</code></li>
-  </ul>
-
-  <h3>Group Management</h3>
-  <ul>
-    <li>Creating and deleting groups</li>
-    <li>Adding users to supplementary groups</li>
-    <li>Understanding primary vs secondary groups</li>
-  </ul>
-
-  <h3>Password and Authentication</h3>
-  <ul>
-    <li>Password aging and expiration policies</li>
-    <li>Account locking and unlocking</li>
-    <li>Introduction to PAM</li>
-  </ul>
-
-  <h3>System Files</h3>
-  <ul>
-    <li><code>/etc/passwd</code> structure</li>
-    <li><code>/etc/shadow</code> security considerations</li>
-    <li><code>/etc/group</code> usage</li>
-  </ul>
-  <p style="margin-top:30px;"><a href="#" style="color:#38bdf8; font-weight:600;">📄 For more notes (PDF)</a></p>
-</section>
-
-    <section id="networking">
-  <h2>Networking</h2>
-  <p>Networking skills are critical for configuring and troubleshooting Linux servers.</p>
-
-  <h3>Network Configuration</h3>
-  <ul>
-    <li>Assigning IP addresses</li>
-    <li>Configuring gateways and routes</li>
-    <li>Understanding DHCP vs static configuration</li>
-  </ul>
-
-  <h3>Network Tools</h3>
-  <ul>
-    <li>Testing connectivity with <code>ping</code></li>
-    <li>Inspecting sockets using <code>ss</code></li>
-    <li>Checking interfaces and routes</li>
-  </ul>
-
-  <h3>Firewall Basics</h3>
-  <ul>
-    <li>Understanding packet filtering</li>
-    <li>Allowing and blocking traffic</li>
-    <li>Basic security concepts</li>
-  </ul>
-
-  <h3>DNS and Hostnames</h3>
-  <ul>
-    <li>Hostname configuration</li>
-    <li>DNS resolution process</li>
-    <li>Troubleshooting name resolution</li>
-  </ul>
-  <p style="margin-top:30px;"><a href="#" style="color:#38bdf8; font-weight:600;">📄 For more notes (PDF)</a></p>
-</section>
-
-    <section id="storage">
-  <h2>Storage</h2>
-  <p>This section covers disk management and filesystem administration.</p>
-
-  <h3>Disk Management</h3>
-  <ul>
-    <li>Identifying disks and partitions</li>
-    <li>Partitioning tools and concepts</li>
-    <li>Understanding disk layouts</li>
-  </ul>
-
-  <h3>Filesystems</h3>
-  <ul>
-    <li>Creating filesystems</li>
-    <li>Mounting and unmounting filesystems</li>
-    <li>Persistent mounts using configuration files</li>
-  </ul>
-
-  <h3>Logical Volume Manager (LVM)</h3>
-  <ul>
-    <li>Physical volumes, volume groups, logical volumes</li>
-    <li>Extending and reducing storage</li>
-    <li>Snapshots and use cases</li>
-  </ul>
-
-  <h3>Swap and Disk Usage</h3>
-  <ul>
-    <li>Swap creation and management</li>
-    <li>Monitoring disk usage</li>
-    <li>Filesystem health checks</li>
-  </ul>
-  <p style="margin-top:30px;"><a href="#" style="color:#38bdf8; font-weight:600;">📄 For more notes (PDF)</a></p>
-</section>
-
-  </main>
-
-  <footer>
-    <p>© 2026 LFCS Study Website • Built for hands-on Linux mastery</p>
-  </footer>
+<footer>
+  © 2026 LFCS Study Website &nbsp;•&nbsp; Built for hands-on Linux mastery
+</footer>
 
 </body>
 </html>
