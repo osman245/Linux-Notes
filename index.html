@@ -387,7 +387,7 @@
         </ul>
       </div>
     </div>
-    <a href="Essential_Commands.pdf" class="pdf-link">📄 More notes (PDF)</a>
+    <a href="Operations_Deployment.pdf" class="pdf-link">📄 More notes (PDF)</a>
   </section>
 
   <!-- OPERATIONS & DEPLOYMENT -->
@@ -527,7 +527,349 @@
     </div>
     <a href="#" class="pdf-link">📄 More notes (PDF)</a>
   </section>
+<section class="section" id="operations">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Operations &amp; Deployment</h2>
+  </div>
+  <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Console access, file management, text processing, archiving, networking security, version control, services, processes, logging, scheduling, packages, containers, and virtual machines.</p>
+  <div class="card-grid">
 
+    <div class="card">
+      <h3>Console Access &amp; SSH</h3>
+      <p class="summary">Access locally or remotely. Remote access must be secured via SSH to encrypt credentials in transit.</p>
+      <ul class="cmds">
+        <li>ssh -V</li>
+        <li>ssh username@node</li>
+        <li>sudo -v ssh@alex</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>System Documentation</h3>
+      <p class="summary">Use <code>--help</code> and <code>man</code>. Search manuals with <code>man -k</code>. Update index with <code>mandb</code>.</p>
+      <ul class="cmds">
+        <li>man -k keyword</li>
+        <li>mandb</li>
+        <li>sudo mandb</li>
+        <li>sudo hostnamectl set-hostname web-server-01</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>File &amp; Directory Management</h3>
+      <p class="summary">Create, copy, move and remove files and directories using core commands.</p>
+      <ul class="cmds">
+        <li>ls -lah</li>
+        <li>cp -ar /tmp/invoice /home/bob</li>
+        <li>rm -rf /home/bob/lfcs</li>
+        <li>mkdir -p /1/2/3/4</li>
+        <li>ls --full-time</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Links (Hard &amp; Soft)</h3>
+      <p class="summary">Hard links point to the same inode. Soft links act as aliases and can cross filesystems.</p>
+      <ul class="cmds">
+        <li>ln -s /tmp /home/bob/link_to_tmp</li>
+        <li>ln /tmp /home/bob/link_to_tmp</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Permissions &amp; Special Bits</h3>
+      <p class="summary">Modify permissions using numeric or symbolic modes. Special permissions: SUID, SGID, Sticky Bit.</p>
+      <ul class="cmds">
+        <li>chmod 644 filename</li>
+        <li>chown -R alice:developers /path/to/directory</li>
+        <li>chmod go+r filename</li>
+        <li>chmod u+s,g+s,o+t /home/bob/datadir</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Finding Files</h3>
+      <ul class="cmds">
+        <li>find -name file1.txt</li>
+        <li>find -mmin -5</li>
+        <li>find -name "f*" -size +512k</li>
+        <li>sudo find /usr -type f -size +5M -size -10M > /home/bob/size.txt</li>
+        <li>find . -perm 664</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Text Processing</h3>
+      <ul class="cmds">
+        <li>head -5 myfile</li>
+        <li>tail -n 10 /var/log/apt/term.log</li>
+        <li>sed 's/canda/canada/g' userinfo.txt</li>
+        <li>cut -d ' ' -f 1 userinfo.txt</li>
+        <li>uniq countries.txt</li>
+        <li>diff -c file1 file2</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Grep &amp; Regex</h3>
+      <ul class="cmds">
+        <li>grep -rwi 'password' /etc/ssh/sshd_config</li>
+        <li>grep -w '7' /etc/login.defs</li>
+        <li>egrep -r '0{3,}' /etc/</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Archiving &amp; Compression</h3>
+      <ul class="cmds">
+        <li>tar -tf archive.tar</li>
+        <li>tar czf archive.tar.gz file1</li>
+        <li>zip -r archive.zip Pictures/</li>
+        <li>gzip file1</li>
+        <li>bzip2 file2</li>
+        <li>xz file3</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Rsync &amp; Remote Sync</h3>
+      <ul class="cmds">
+        <li>rsync -a Pictures/ aaron@9.9.9.9:/home/aaron/Pictures/</li>
+        <li>rsync -a aaron@9.9.9.9:/home/aaron/Pictures/ .</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Redirection &amp; Streams</h3>
+      <ul class="cmds">
+        <li>date > file.txt</li>
+        <li>grep -r '^The' /etc/ 2>/dev/null</li>
+        <li>stdin (&lt;), stdout (1>), stderr (2>)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>SSL / TLS with OpenSSL</h3>
+      <ul class="cmds">
+        <li>man openssl</li>
+        <li>openssl req -newkey rsa:2048 -keyout key.pem -out req.pem</li>
+        <li>openssl req -x509 -noenc -newkey rsa:4096 -days 365</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Version Control (Git)</h3>
+      <ul class="cmds">
+        <li>sudo apt install git</li>
+        <li>git init</li>
+        <li>git add .</li>
+        <li>git commit -m "changes"</li>
+        <li>git branch 1.1-testing</li>
+        <li>git switch 1.1-testing</li>
+        <li>git merge 1.1-testing</li>
+        <li>git remote -v</li>
+        <li>ssh-keygen</li>
+        <li>git log</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Managing Services (systemctl)</h3>
+      <p class="summary">Use systemctl to manage daemon services — start, stop, enable, disable, edit, and monitor. SSH is one example daemon.</p>
+      <ul class="cmds">
+        <li>sudo systemctl reboot --force</li>
+        <li>sudo systemctl poweroff --force</li>
+        <li>sudo shutdown +15</li>
+        <li>systemctl cat ssh.service</li>
+        <li>sudo systemctl edit --full ssh.service</li>
+        <li>sudo systemctl revert ssh.service</li>
+        <li>sudo systemctl status ssh.service</li>
+        <li>sudo systemctl stop/start ssh.service</li>
+        <li>sudo systemctl restart ssh.service</li>
+        <li>sudo systemctl reload ssh.service</li>
+        <li>sudo systemctl disable/enable ssh.service</li>
+        <li>systemctl is-enabled ssh.service</li>
+        <li>sudo systemctl mask atd.service</li>
+        <li>sudo systemctl unmask atd.service</li>
+        <li>sudo systemctl list-units --type=service --all</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>OS Targets</h3>
+      <p class="summary">Change OS boot modes with systemctl. Graphical target includes multi-user plus a GUI.</p>
+      <ul class="cmds">
+        <li>systemctl get-default</li>
+        <li>sudo systemctl set-default multi-user.target</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Scripting for Automation</h3>
+      <p class="summary">Automate maintenance tasks with bash scripts. Use conditionals to safely handle existing files before overwriting.</p>
+      <ul class="cmds">
+        <li>#!/bin/bash</li>
+        <li>if test -f /tmp/archive.tar.gz; then mv ... fi</li>
+        <li>tar acf /tmp/archive.tar.gz /etc/apt/</li>
+        <li>cat /etc/cron.monthly/0anacron</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Managing Processes</h3>
+      <p class="summary">Start, list, reprioritize, and kill processes. Use nice/renice to control CPU priority and kill signals as a last resort.</p>
+      <ul class="cmds">
+        <li>ps -aux</li>
+        <li>ps u -U username</li>
+        <li>pgrep -a syslog</li>
+        <li>nice -n 10 tar -czf backup.tar.gz /home/bob</li>
+        <li>renice -n 5 -p 1234</li>
+        <li>kill -L</li>
+        <li>kill -SIGHUP 1457</li>
+        <li>fg / bg</li>
+        <li>lsof -p 135</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Analyzing System Logs</h3>
+      <p class="summary">Locate and analyze log files using rsyslog and journalctl. Filter by unit, priority, time range, and boot session.</p>
+      <ul class="cmds">
+        <li>sudo systemctl status rsyslog</li>
+        <li>sudo journalctl --unit=ssh.service -n 20 --no-pager</li>
+        <li>less /var/log/syslog</li>
+        <li>journalctl /usr/bin/sudo</li>
+        <li>journalctl -p err</li>
+        <li>journalctl -p info -g '^b'</li>
+        <li>journalctl -S 01:00 -U 02:00</li>
+        <li>journalctl -S '2024-03-03 01:00:30'</li>
+        <li>journalctl -b 0</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Scheduling Tasks</h3>
+      <p class="summary">Use cron for recurring schedules, anacron for daily/weekly/monthly jobs, and <code>at</code> for one-time tasks.</p>
+      <ul class="cmds">
+        <li>crontab -e</li>
+        <li>crontab -l</li>
+        <li>sudo crontab -e -u jane</li>
+        <li>crontab -r</li>
+        <li>sudo vim /etc/anacrontab</li>
+        <li>at '15:00'</li>
+        <li>at 'now + 30 minutes'</li>
+        <li>at 'August 20 2024'</li>
+        <li>atq</li>
+        <li>at -c 1</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Software Package Management</h3>
+      <p class="summary">APT builds on dpkg to handle dependency resolution and repository management. Repos are defined in <code>/etc/apt/sources.list</code>.</p>
+      <ul class="cmds">
+        <li>sudo apt update && sudo apt upgrade</li>
+        <li>sudo apt update && sudo apt install nginx</li>
+        <li>dpkg --listfiles nginx-common</li>
+        <li>dpkg --search /bin/ls</li>
+        <li>sudo apt remove nginx</li>
+        <li>sudo apt autoremove nginx</li>
+        <li>apt show libnginx-mod-stream</li>
+        <li>sudo add-apt-repository ppa:john/mylatestapp</li>
+        <li>add-apt-repository --list</li>
+        <li>apt search "apache http server"</li>
+        <li>git clone &lt;repo-url&gt;</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Monitoring Resources &amp; Repairing Filesystems</h3>
+      <p class="summary">Monitor disk, memory, and CPU. Unmount a filesystem before running repair tools like fsck or xfs_repair.</p>
+      <ul class="cmds">
+        <li>df -h</li>
+        <li>free -h</li>
+        <li>uptime</li>
+        <li>lscpu</li>
+        <li>lspci</li>
+        <li>du -sh /bin/</li>
+        <li>sudo xfs_repair -v /dev/vdb1</li>
+        <li>sudo fsck.ext4 -v -f -p /dev/vdb2</li>
+        <li>sudo xfs_repair -n /dev/vdd > /home/bob/fscheck 2>&1</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Kernel Runtime Parameters</h3>
+      <p class="summary">Change kernel parameters non-persistently with sysctl, or persistently via <code>/etc/sysctl.d/</code> config files.</p>
+      <ul class="cmds">
+        <li>sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1</li>
+        <li>sysctl -a | grep vm</li>
+        <li>sudo vim /etc/sysctl.d/swap-less.conf</li>
+        <li># add: vm.swappiness=20</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>SELinux — File &amp; Process Contexts</h3>
+      <p class="summary">SELinux labels all files and processes in User:Role:Type:Level format. Use audit tools to diagnose and create policy modules for denials.</p>
+      <ul class="cmds">
+        <li>getenforce</li>
+        <li>ls -Z /usr/sbin/sshd</li>
+        <li>chcon -t httpd_sys_content_t /var/index.html</li>
+        <li>semanage user -l</li>
+        <li>sudo restorecon -R /var/log/</li>
+        <li>sudo semanage login -l</li>
+        <li>sudo apt install selinux selinux-basics auditd</li>
+        <li>sudo selinux-activate</li>
+        <li>audit2why --all | less</li>
+        <li>ps -eZ | grep sshd_t</li>
+        <li>sudo audit2allow --all -M mymodule</li>
+        <li>sudo semodule -u mymodule.pp</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Containerization (Docker)</h3>
+      <p class="summary">Docker bundles an application and all its components into a portable container, solving the problem of scattered config files and dependencies.</p>
+      <ul class="cmds">
+        <li>sudo docker images</li>
+        <li>docker search nginx</li>
+        <li>docker pull ubuntu/nginx</li>
+        <li>docker run -d --publish 8080:80 --name mywebserver nginx</li>
+        <li>docker ps --all</li>
+        <li>docker start &lt;container-id&gt;</li>
+        <li>docker stop &lt;container-name&gt;</li>
+        <li>docker rm &lt;name/container-id&gt;</li>
+        <li>docker rmi &lt;image-name&gt;</li>
+        <li>docker build --tag jeremy/customnginximage:1.0 myimage</li>
+        <li>nc localhost 8080</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Virtual Machines (virsh)</h3>
+      <p class="summary">Use virsh to manage KVM/QEMU VMs defined via XML. Use virt-install to provision new VMs from cloud images or ISO files.</p>
+      <ul class="cmds">
+        <li>sudo apt install virt-manager</li>
+        <li>virsh define testmachine.xml</li>
+        <li>virsh list --all</li>
+        <li>virsh start TestMachine</li>
+        <li>virsh reboot TestMachine</li>
+        <li>virsh shutdown TestMachine</li>
+        <li>virsh destroy TestMachine</li>
+        <li>virsh undefine --remove-all-storage TestMachine</li>
+        <li>virsh autostart --disable TestMachine</li>
+        <li>virsh dominfo TestMachine</li>
+        <li>virsh setvcpus TestMachine 2 --config --maximum</li>
+        <li>virsh setmaxmem TestMachine 2048M --config</li>
+        <li>virsh console ubuntu1</li>
+      </ul>
+    </div>
+
+  </div>
+  <a href="Operations_Deployment.pdf" class="pdf-link">📄 More notes (PDF)</a>
+</section>
   <!-- USERS & GROUPS -->
   <section class="section" id="users">
     <div class="section-header">
