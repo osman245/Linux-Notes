@@ -3,23 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LFCS – Linux Foundation Certified System Administrator</title>
+<title>SamatarSystems — Smarter Technology, Smarter You</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0d14;
-    --surface: #111520;
-    --surface2: #161b28;
-    --border: #1e2635;
-    --accent: #00e5a0;
-    --accent2: #0070f3;
-    --warn: #f59e0b;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --code-bg: #0d111c;
-    --radius: 10px;
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --accent: #6c63ff;
+    --accent2: #00d4aa;
+    --accent3: #ff6b6b;
+    --text: #e8e8f0;
+    --muted: #7a7a99;
+    --card: #14141f;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,947 +24,1162 @@
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Syne', sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.7;
-    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
     overflow-x: hidden;
   }
 
-  /* ── HEADER ── */
-  header {
+  /* --- NAV --- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .nav-logo img {
+    height: 44px;
+    width: auto;
+    display: block;
+    /* white background pill so logo reads on dark nav */
+    background: #fff;
+    border-radius: 8px;
+    padding: 3px 6px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* --- HERO --- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 5% 80px;
     position: relative;
-    padding: 5rem 1.5rem 4rem;
-    text-align: center;
     overflow: hidden;
   }
 
-  header::before {
+  .hero::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(0,229,160,.15) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(0,112,243,.1) 0%, transparent 60%);
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(108,99,255,0.15) 0%, transparent 70%);
     pointer-events: none;
   }
 
-  .grid-bg {
+  .hero::after {
+    content: '';
     position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,229,160,.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,160,.04) 1px, transparent 1px);
-    background-size: 40px 40px;
+    bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0,212,170,0.08) 0%, transparent 70%);
     pointer-events: none;
   }
 
-  .badge {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .7rem;
-    letter-spacing: .12em;
-    text-transform: uppercase;
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(108,99,255,0.12);
+    border: 1px solid rgba(108,99,255,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
     color: var(--accent);
-    border: 1px solid rgba(0,229,160,.3);
-    border-radius: 999px;
-    padding: .25rem .85rem;
-    margin-bottom: 1.25rem;
-    backdrop-filter: blur(6px);
-    background: rgba(0,229,160,.06);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    width: fit-content;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
   }
 
   h1 {
-    font-size: clamp(3rem, 10vw, 7rem);
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
     font-weight: 800;
-    letter-spacing: -.03em;
-    line-height: 1;
-    background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    max-width: 800px;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: .75rem;
   }
 
-  .subtitle {
-    font-size: clamp(.85rem, 2.5vw, 1.1rem);
+  .hero-sub {
+    font-size: 1.15rem;
     color: var(--muted);
-    font-weight: 400;
-    letter-spacing: .04em;
-    text-transform: uppercase;
+    max-width: 520px;
     margin-bottom: 2.5rem;
+    font-weight: 300;
+    line-height: 1.7;
   }
 
-  /* ── NAV ── */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10,13,20,.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    padding: .6rem 1.5rem;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  nav::-webkit-scrollbar { display: none; }
-
-  nav ul {
+  .hero-ctas {
     display: flex;
-    gap: .35rem;
-    list-style: none;
-    min-width: max-content;
-    justify-content: center;
-  }
-
-  nav a {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .72rem;
-    letter-spacing: .06em;
-    color: var(--muted);
-    text-decoration: none;
-    padding: .4rem .9rem;
-    border-radius: 6px;
-    border: 1px solid transparent;
-    transition: all .2s;
-    white-space: nowrap;
-  }
-  nav a:hover {
-    color: var(--accent);
-    border-color: rgba(0,229,160,.25);
-    background: rgba(0,229,160,.07);
-  }
-
-  /* ── MAIN ── */
-  main {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem 1.25rem 4rem;
-  }
-
-  /* ── SECTIONS ── */
-  .section {
-    margin-bottom: 3.5rem;
-    animation: fadeUp .5s ease both;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .section-header {
-    display: flex;
-    align-items: center;
     gap: 1rem;
-    margin-bottom: 1.75rem;
-    padding-bottom: .85rem;
-    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
   }
 
-  .section-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .7rem;
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: #7c74ff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(108,99,255,0.35);
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--text);
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
     color: var(--accent);
-    background: rgba(0,229,160,.1);
-    border: 1px solid rgba(0,229,160,.2);
-    border-radius: 6px;
-    padding: .2rem .5rem;
-    flex-shrink: 0;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .stat { display: flex; flex-direction: column; gap: 4px; }
+
+  .stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.03em;
+  }
+
+  .stat-val span { color: var(--accent); }
+
+  .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* --- SECTIONS --- */
+  section { padding: 100px 5%; }
+
+  .section-tag {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
   }
 
   h2 {
-    font-size: clamp(1.35rem, 4vw, 1.75rem);
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
     font-weight: 800;
-    letter-spacing: -.02em;
-    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
   }
 
-  /* ── CARDS ── */
-  .card-grid {
+  h2 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* --- ABOUT --- */
+  #about {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .pill-icon { font-size: 1rem; }
+
+  /* --- SERVICES --- */
+  #services { max-width: 1200px; margin: 0 auto; padding: 100px 5%; }
+
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.3s;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .service-card:hover {
+    border-color: rgba(108,99,255,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.3);
+  }
+
+  .service-card:hover::before { opacity: 1; }
+
+  .service-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+
+  .service-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .service-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    background: rgba(108,99,255,0.1);
+    border: 1px solid rgba(108,99,255,0.2);
+    color: var(--accent);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  /* Study guide card is special */
+  .service-card.featured {
+    border-color: rgba(0,212,170,0.25);
+    grid-column: span 1;
+  }
+
+  .service-card.featured .service-num { color: var(--accent2); }
+  .service-card.featured .tag {
+    background: rgba(0,212,170,0.1);
+    border-color: rgba(0,212,170,0.2);
+    color: var(--accent2);
+  }
+
+  .study-guide-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .guide-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0,212,170,0.06);
+    border: 1px solid rgba(0,212,170,0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .guide-link:hover {
+    background: rgba(0,212,170,0.12);
+    border-color: rgba(0,212,170,0.4);
+    color: var(--accent2);
+    transform: translateX(4px);
+  }
+
+  .guide-link-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .guide-badge {
+    background: rgba(0,212,170,0.15);
+    color: var(--accent2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .guide-arrow { color: var(--accent2); font-size: 1rem; }
+
+  /* --- PROCESS --- */
+  #process {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .process-inner { max-width: 1200px; margin: 0 auto; }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: 2rem; right: 2rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+  }
+
+  .step {
+    position: relative;
+    padding-top: 1rem;
+  }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .step p { color: var(--muted); font-size: 0.875rem; line-height: 1.6; font-weight: 300; }
+
+  /* --- CONTACT --- */
+  #contact { max-width: 1200px; margin: 0 auto; padding: 100px 5%; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .contact-info h2 { margin-bottom: 1rem; }
+
+  .contact-info p { color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 2.5rem; }
+
+  .contact-details { display: flex; flex-direction: column; gap: 1rem; }
+
+  .contact-detail {
+    display: flex;
+    align-items: center;
     gap: 1rem;
   }
 
-  .card {
-    background: var(--surface);
+  .detail-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: var(--card);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.25rem;
-    transition: border-color .2s, transform .2s;
-  }
-  .card:hover {
-    border-color: rgba(0,229,160,.3);
-    transform: translateY(-2px);
-  }
-
-  h3 {
-    font-size: .95rem;
-    font-weight: 700;
-    color: var(--accent);
-    letter-spacing: .02em;
-    margin-bottom: .75rem;
     display: flex;
     align-items: center;
-    gap: .5rem;
-  }
-  h3::before {
-    content: '';
-    display: block;
-    width: 3px;
-    height: 14px;
-    background: var(--accent);
-    border-radius: 2px;
+    justify-content: center;
+    font-size: 1rem;
     flex-shrink: 0;
   }
 
-  /* Summary block */
-  .summary {
-    font-size: .8rem;
-    color: var(--muted);
-    background: var(--code-bg);
-    border-left: 3px solid var(--accent2);
-    border-radius: 0 6px 6px 0;
-    padding: .6rem .85rem;
-    margin-bottom: .85rem;
-    line-height: 1.55;
-  }
+  .detail-text { font-size: 0.9rem; }
+  .detail-text strong { display: block; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
 
-  /* Commands list */
-  ul.cmds {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: .35rem;
-  }
-  ul.cmds li {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .75rem;
-    background: var(--code-bg);
+  .contact-form {
+    background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: .35rem .65rem;
-    color: #a5f3c0;
-    word-break: break-all;
-    line-height: 1.45;
-  }
-  ul.cmds li:hover {
-    border-color: rgba(0,229,160,.3);
-    background: rgba(0,229,160,.05);
+    border-radius: 16px;
+    padding: 2.5rem;
   }
 
-  /* Bullet lists */
-  ul.bullets {
-    list-style: none;
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
+
+  label { font-size: 0.8rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  input, textarea, select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 120px; }
+  select option { background: var(--surface); }
+
+  .form-submit {
+    width: 100%;
+    margin-top: 0.5rem;
+    justify-content: center;
+    font-size: 1rem;
+  }
+
+  /* --- PROJECT LINKS --- */
+  .project-links {
     display: flex;
     flex-direction: column;
-    gap: .45rem;
-  }
-  ul.bullets li {
-    font-size: .88rem;
-    color: #94a3b8;
-    padding-left: 1.1rem;
-    position: relative;
-    line-height: 1.5;
-  }
-  ul.bullets li::before {
-    content: '›';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-weight: 700;
-  }
-  ul.bullets code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .78rem;
-    background: rgba(0,229,160,.1);
-    color: var(--accent);
-    padding: .1rem .35rem;
-    border-radius: 3px;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
   }
 
-  /* PDF link */
-  .pdf-link {
-    display: inline-flex;
-    align-items: center;
-    gap: .5rem;
-    margin-top: 1.25rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .75rem;
-    color: var(--warn);
-    border: 1px solid rgba(245,158,11,.25);
-    border-radius: 6px;
-    padding: .4rem 1rem;
-    text-decoration: none;
-    transition: all .2s;
-    background: rgba(245,158,11,.05);
-  }
-  .pdf-link:hover {
-    background: rgba(245,158,11,.12);
-    border-color: rgba(245,158,11,.5);
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    text-align: center;
-    padding: 2rem 1rem;
-    border-top: 1px solid var(--border);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .72rem;
+  .project-link-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--muted);
-    letter-spacing: .06em;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
   }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 600px) {
-    header { padding: 3.5rem 1rem 2.5rem; }
-    main { padding: 1.5rem 1rem 3rem; }
-    .card-grid { grid-template-columns: 1fr; }
-    nav ul { justify-content: flex-start; }
+  .project-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(108,99,255,0.06);
+    border: 1px solid rgba(108,99,255,0.18);
+    border-radius: 8px;
+    padding: 11px 14px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .project-link:hover {
+    background: rgba(108,99,255,0.14);
+    border-color: rgba(108,99,255,0.4);
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .project-link-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .project-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .project-arrow { color: var(--accent); font-size: 0.9rem; opacity: 0.7; }
+
+  /* --- FOOTER --- */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p { color: var(--muted); font-size: 0.85rem; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--text); }
+
+  .footer-links { display: flex; gap: 2rem; }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 900px) {
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .process-steps::before { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="grid-bg"></div>
-  <p class="badge">Study Guide v2026</p>
-  <h1>LFCS</h1>
-  <p class="subtitle">Linux Foundation Certified System Administrator</p>
-</header>
-
+<!-- NAV -->
 <nav>
-  <ul>
-    <li><a href="#essential">Essential Commands</a></li>
-    <li><a href="#operations">Operations & Deployment</a></li>
-    <li><a href="#users">Users & Groups</a></li>
-    <li><a href="#networking">Networking</a></li>
-    <li><a href="#storage">Storage</a></li>
+  <a href="#" class="nav-logo"><img src="data:image/jpeg;base64,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" alt="SamatarSystems"></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
+  <a href="#contact" class="btn-primary" style="padding:10px 20px;font-size:0.85rem;">Get in Touch</a>
 </nav>
 
-<main>
-
-  <!-- OPERATIONS & DEPLOYMENT -->
-  <section class="section" id="essential">
-    <div class="section-header">
-      <span class="section-num">02</span>
-      <h2>Essiental &amp; Commands</h2>
-    </div>
-    <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Console access, file management, text processing, archiving, networking security, and version control fundamentals.</p>
-    <div class="card-grid">
-      <div class="card">
-        <h3>Console Access &amp; SSH</h3>
-        <p class="summary">Access locally or remotely. Remote access must be secured via SSH to encrypt credentials in transit.</p>
-        <ul class="cmds">
-          <li>ssh -V</li>
-          <li>ssh username@node</li>
-          <li>sudo -v ssh@alex</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>System Documentation</h3>
-        <p class="summary">Use <code>--help</code> and <code>man</code>. Search manuals with <code>man -k</code>. Update index with <code>mandb</code>.</p>
-        <ul class="cmds">
-          <li>man -k keyword</li>
-          <li>mandb</li>
-          <li>sudo mandb</li>
-          <li>sudo hostnamectl set-hostname web-server-01</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>File &amp; Directory Management</h3>
-        <p class="summary">Create, copy, move and remove files and directories using core commands.</p>
-        <ul class="cmds">
-          <li>ls -lah</li>
-          <li>cp -ar /tmp/invoice /home/bob</li>
-          <li>rm -rf /home/bob/lfcs</li>
-          <li>mkdir -p /1/2/3/4</li>
-          <li>ls --full-time</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Links (Hard &amp; Soft)</h3>
-        <p class="summary">Hard links point to the same inode. Soft links act as aliases and can cross filesystems.</p>
-        <ul class="cmds">
-          <li>ln -s /tmp /home/bob/link_to_tmp</li>
-          <li>ln /tmp /home/bob/link_to_tmp</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Permissions &amp; Special Bits</h3>
-        <p class="summary">Modify permissions using numeric or symbolic modes. Special permissions: SUID, SGID, Sticky Bit.</p>
-        <ul class="cmds">
-          <li>chmod 644 filename</li>
-          <li>chown -R alice:developers /path/to/directory</li>
-          <li>chmod go+r filename</li>
-          <li>chmod u+s,g+s,o+t /home/bob/datadir</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Finding Files</h3>
-        <ul class="cmds">
-          <li>find -name file1.txt</li>
-          <li>find -mmin -5</li>
-          <li>find -name "f*" -size +512k</li>
-          <li>sudo find /usr -type f -size +5M -size -10M > /home/bob/size.txt</li>
-          <li>find . -perm 664</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Text Processing</h3>
-        <ul class="cmds">
-          <li>head -5 myfile</li>
-          <li>tail -n 10 /var/log/apt/term.log</li>
-          <li>sed 's/canda/canada/g' userinfo.txt</li>
-          <li>cut -d ' ' -f 1 userinfo.txt</li>
-          <li>uniq countries.txt</li>
-          <li>diff -c file1 file2</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Grep &amp; Regex</h3>
-        <ul class="cmds">
-          <li>grep -rwi 'password' /etc/ssh/sshd_config</li>
-          <li>grep -w '7' /etc/login.defs</li>
-          <li>egrep -r '0{3,}' /etc/</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Archiving &amp; Compression</h3>
-        <ul class="cmds">
-          <li>tar -tf archive.tar</li>
-          <li>tar czf archive.tar.gz file1</li>
-          <li>zip -r archive.zip Pictures/</li>
-          <li>gzip file1</li>
-          <li>bzip2 file2</li>
-          <li>xz file3</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Rsync &amp; Remote Sync</h3>
-        <ul class="cmds">
-          <li>rsync -a Pictures/ aaron@9.9.9.9:/home/aaron/Pictures/</li>
-          <li>rsync -a aaron@9.9.9.9:/home/aaron/Pictures/ .</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Redirection &amp; Streams</h3>
-        <ul class="cmds">
-          <li>date > file.txt</li>
-          <li>grep -r '^The' /etc/ 2>/dev/null</li>
-          <li>stdin (&lt;), stdout (1>), stderr (2>)</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>SSL / TLS with OpenSSL</h3>
-        <ul class="cmds">
-          <li>man openssl</li>
-          <li>openssl req -newkey rsa:2048 -keyout key.pem -out req.pem</li>
-          <li>openssl req -x509 -noenc -newkey rsa:4096 -days 365</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Version Control (Git)</h3>
-        <ul class="cmds">
-          <li>sudo apt install git</li>
-          <li>git init</li>
-          <li>git add .</li>
-          <li>git commit -m "changes"</li>
-          <li>git branch 1.1-testing</li>
-          <li>git switch 1.1-testing</li>
-          <li>git merge 1.1-testing</li>
-          <li>git remote -v</li>
-          <li>ssh-keygen</li>
-          <li>git log</li>
-        </ul>
-      </div>
-    </div>
-    <a href="Essential_Commands (1).pdf" class="pdf-link">📄 More notes (PDF)</a>
-  </section>
-<section class="section" id="operations">
-  <div class="section-header">
-    <span class="section-num">02</span>
-    <h2>Operations &amp; Deployment</h2>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Technology & Solutions</div>
+  <h1>Building <em>Smarter</em> Technology,<br>One Solution at a Time</h1>
+  <p class="hero-sub">SamatarSystems delivers real IT solutions, in-depth study guides, and personal mentorship — built and delivered by me, directly.</p>
+  <div class="hero-ctas">
+    <a href="#contact" class="btn-primary">Get in Touch →</a>
+    <a href="#services" class="btn-outline">Explore Services</a>
   </div>
-  <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Console access, file management, text processing, archiving, networking security, version control, services, processes, logging, scheduling, packages, containers, and virtual machines.</p>
-  <div class="card-grid">
-
-    <div class="card">
-      <h3>Console Access &amp; SSH</h3>
-      <p class="summary">Access locally or remotely. Remote access must be secured via SSH to encrypt credentials in transit.</p>
-      <ul class="cmds">
-        <li>ssh -V</li>
-        <li>ssh username@node</li>
-        <li>sudo -v ssh@alex</li>
-      </ul>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-val">50<span>+</span></span>
+      <span class="stat-label">Projects Delivered</span>
     </div>
-
-    <div class="card">
-      <h3>System Documentation</h3>
-      <p class="summary">Use <code>--help</code> and <code>man</code>. Search manuals with <code>man -k</code>. Update index with <code>mandb</code>.</p>
-      <ul class="cmds">
-        <li>man -k keyword</li>
-        <li>mandb</li>
-        <li>sudo mandb</li>
-        <li>sudo hostnamectl set-hostname web-server-01</li>
-      </ul>
+    <div class="stat">
+      <span class="stat-val">99.9<span>%</span></span>
+      <span class="stat-label">Uptime Delivered</span>
     </div>
-
-    <div class="card">
-      <h3>File &amp; Directory Management</h3>
-      <p class="summary">Create, copy, move and remove files and directories using core commands.</p>
-      <ul class="cmds">
-        <li>ls -lah</li>
-        <li>cp -ar /tmp/invoice /home/bob</li>
-        <li>rm -rf /home/bob/lfcs</li>
-        <li>mkdir -p /1/2/3/4</li>
-        <li>ls --full-time</li>
-      </ul>
+    <div class="stat">
+      <span class="stat-val">3<span>×</span></span>
+      <span class="stat-label">Avg. Performance Gain</span>
     </div>
-
-    <div class="card">
-      <h3>Links (Hard &amp; Soft)</h3>
-      <p class="summary">Hard links point to the same inode. Soft links act as aliases and can cross filesystems.</p>
-      <ul class="cmds">
-        <li>ln -s /tmp /home/bob/link_to_tmp</li>
-        <li>ln /tmp /home/bob/link_to_tmp</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Permissions &amp; Special Bits</h3>
-      <p class="summary">Modify permissions using numeric or symbolic modes. Special permissions: SUID, SGID, Sticky Bit.</p>
-      <ul class="cmds">
-        <li>chmod 644 filename</li>
-        <li>chown -R alice:developers /path/to/directory</li>
-        <li>chmod go+r filename</li>
-        <li>chmod u+s,g+s,o+t /home/bob/datadir</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Finding Files</h3>
-      <ul class="cmds">
-        <li>find -name file1.txt</li>
-        <li>find -mmin -5</li>
-        <li>find -name "f*" -size +512k</li>
-        <li>sudo find /usr -type f -size +5M -size -10M > /home/bob/size.txt</li>
-        <li>find . -perm 664</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Text Processing</h3>
-      <ul class="cmds">
-        <li>head -5 myfile</li>
-        <li>tail -n 10 /var/log/apt/term.log</li>
-        <li>sed 's/canda/canada/g' userinfo.txt</li>
-        <li>cut -d ' ' -f 1 userinfo.txt</li>
-        <li>uniq countries.txt</li>
-        <li>diff -c file1 file2</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Grep &amp; Regex</h3>
-      <ul class="cmds">
-        <li>grep -rwi 'password' /etc/ssh/sshd_config</li>
-        <li>grep -w '7' /etc/login.defs</li>
-        <li>egrep -r '0{3,}' /etc/</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Archiving &amp; Compression</h3>
-      <ul class="cmds">
-        <li>tar -tf archive.tar</li>
-        <li>tar czf archive.tar.gz file1</li>
-        <li>zip -r archive.zip Pictures/</li>
-        <li>gzip file1</li>
-        <li>bzip2 file2</li>
-        <li>xz file3</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Rsync &amp; Remote Sync</h3>
-      <ul class="cmds">
-        <li>rsync -a Pictures/ aaron@9.9.9.9:/home/aaron/Pictures/</li>
-        <li>rsync -a aaron@9.9.9.9:/home/aaron/Pictures/ .</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Redirection &amp; Streams</h3>
-      <ul class="cmds">
-        <li>date > file.txt</li>
-        <li>grep -r '^The' /etc/ 2>/dev/null</li>
-        <li>stdin (&lt;), stdout (1>), stderr (2>)</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>SSL / TLS with OpenSSL</h3>
-      <ul class="cmds">
-        <li>man openssl</li>
-        <li>openssl req -newkey rsa:2048 -keyout key.pem -out req.pem</li>
-        <li>openssl req -x509 -noenc -newkey rsa:4096 -days 365</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Version Control (Git)</h3>
-      <ul class="cmds">
-        <li>sudo apt install git</li>
-        <li>git init</li>
-        <li>git add .</li>
-        <li>git commit -m "changes"</li>
-        <li>git branch 1.1-testing</li>
-        <li>git switch 1.1-testing</li>
-        <li>git merge 1.1-testing</li>
-        <li>git remote -v</li>
-        <li>ssh-keygen</li>
-        <li>git log</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Managing Services (systemctl)</h3>
-      <p class="summary">Use systemctl to manage daemon services — start, stop, enable, disable, edit, and monitor. SSH is one example daemon.</p>
-      <ul class="cmds">
-        <li>sudo systemctl reboot --force</li>
-        <li>sudo systemctl poweroff --force</li>
-        <li>sudo shutdown +15</li>
-        <li>systemctl cat ssh.service</li>
-        <li>sudo systemctl edit --full ssh.service</li>
-        <li>sudo systemctl revert ssh.service</li>
-        <li>sudo systemctl status ssh.service</li>
-        <li>sudo systemctl stop/start ssh.service</li>
-        <li>sudo systemctl restart ssh.service</li>
-        <li>sudo systemctl reload ssh.service</li>
-        <li>sudo systemctl disable/enable ssh.service</li>
-        <li>systemctl is-enabled ssh.service</li>
-        <li>sudo systemctl mask atd.service</li>
-        <li>sudo systemctl unmask atd.service</li>
-        <li>sudo systemctl list-units --type=service --all</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>OS Targets</h3>
-      <p class="summary">Change OS boot modes with systemctl. Graphical target includes multi-user plus a GUI.</p>
-      <ul class="cmds">
-        <li>systemctl get-default</li>
-        <li>sudo systemctl set-default multi-user.target</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Scripting for Automation</h3>
-      <p class="summary">Automate maintenance tasks with bash scripts. Use conditionals to safely handle existing files before overwriting.</p>
-      <ul class="cmds">
-        <li>#!/bin/bash</li>
-        <li>if test -f /tmp/archive.tar.gz; then mv ... fi</li>
-        <li>tar acf /tmp/archive.tar.gz /etc/apt/</li>
-        <li>cat /etc/cron.monthly/0anacron</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Managing Processes</h3>
-      <p class="summary">Start, list, reprioritize, and kill processes. Use nice/renice to control CPU priority and kill signals as a last resort.</p>
-      <ul class="cmds">
-        <li>ps -aux</li>
-        <li>ps u -U username</li>
-        <li>pgrep -a syslog</li>
-        <li>nice -n 10 tar -czf backup.tar.gz /home/bob</li>
-        <li>renice -n 5 -p 1234</li>
-        <li>kill -L</li>
-        <li>kill -SIGHUP 1457</li>
-        <li>fg / bg</li>
-        <li>lsof -p 135</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Analyzing System Logs</h3>
-      <p class="summary">Locate and analyze log files using rsyslog and journalctl. Filter by unit, priority, time range, and boot session.</p>
-      <ul class="cmds">
-        <li>sudo systemctl status rsyslog</li>
-        <li>sudo journalctl --unit=ssh.service -n 20 --no-pager</li>
-        <li>less /var/log/syslog</li>
-        <li>journalctl /usr/bin/sudo</li>
-        <li>journalctl -p err</li>
-        <li>journalctl -p info -g '^b'</li>
-        <li>journalctl -S 01:00 -U 02:00</li>
-        <li>journalctl -S '2024-03-03 01:00:30'</li>
-        <li>journalctl -b 0</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Scheduling Tasks</h3>
-      <p class="summary">Use cron for recurring schedules, anacron for daily/weekly/monthly jobs, and <code>at</code> for one-time tasks.</p>
-      <ul class="cmds">
-        <li>crontab -e</li>
-        <li>crontab -l</li>
-        <li>sudo crontab -e -u jane</li>
-        <li>crontab -r</li>
-        <li>sudo vim /etc/anacrontab</li>
-        <li>at '15:00'</li>
-        <li>at 'now + 30 minutes'</li>
-        <li>at 'August 20 2024'</li>
-        <li>atq</li>
-        <li>at -c 1</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Software Package Management</h3>
-      <p class="summary">APT builds on dpkg to handle dependency resolution and repository management. Repos are defined in <code>/etc/apt/sources.list</code>.</p>
-      <ul class="cmds">
-        <li>sudo apt update && sudo apt upgrade</li>
-        <li>sudo apt update && sudo apt install nginx</li>
-        <li>dpkg --listfiles nginx-common</li>
-        <li>dpkg --search /bin/ls</li>
-        <li>sudo apt remove nginx</li>
-        <li>sudo apt autoremove nginx</li>
-        <li>apt show libnginx-mod-stream</li>
-        <li>sudo add-apt-repository ppa:john/mylatestapp</li>
-        <li>add-apt-repository --list</li>
-        <li>apt search "apache http server"</li>
-        <li>git clone &lt;repo-url&gt;</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Monitoring Resources &amp; Repairing Filesystems</h3>
-      <p class="summary">Monitor disk, memory, and CPU. Unmount a filesystem before running repair tools like fsck or xfs_repair.</p>
-      <ul class="cmds">
-        <li>df -h</li>
-        <li>free -h</li>
-        <li>uptime</li>
-        <li>lscpu</li>
-        <li>lspci</li>
-        <li>du -sh /bin/</li>
-        <li>sudo xfs_repair -v /dev/vdb1</li>
-        <li>sudo fsck.ext4 -v -f -p /dev/vdb2</li>
-        <li>sudo xfs_repair -n /dev/vdd > /home/bob/fscheck 2>&1</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Kernel Runtime Parameters</h3>
-      <p class="summary">Change kernel parameters non-persistently with sysctl, or persistently via <code>/etc/sysctl.d/</code> config files.</p>
-      <ul class="cmds">
-        <li>sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1</li>
-        <li>sysctl -a | grep vm</li>
-        <li>sudo vim /etc/sysctl.d/swap-less.conf</li>
-        <li># add: vm.swappiness=20</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>SELinux — File &amp; Process Contexts</h3>
-      <p class="summary">SELinux labels all files and processes in User:Role:Type:Level format. Use audit tools to diagnose and create policy modules for denials.</p>
-      <ul class="cmds">
-        <li>getenforce</li>
-        <li>ls -Z /usr/sbin/sshd</li>
-        <li>chcon -t httpd_sys_content_t /var/index.html</li>
-        <li>semanage user -l</li>
-        <li>sudo restorecon -R /var/log/</li>
-        <li>sudo semanage login -l</li>
-        <li>sudo apt install selinux selinux-basics auditd</li>
-        <li>sudo selinux-activate</li>
-        <li>audit2why --all | less</li>
-        <li>ps -eZ | grep sshd_t</li>
-        <li>sudo audit2allow --all -M mymodule</li>
-        <li>sudo semodule -u mymodule.pp</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Containerization (Docker)</h3>
-      <p class="summary">Docker bundles an application and all its components into a portable container, solving the problem of scattered config files and dependencies.</p>
-      <ul class="cmds">
-        <li>sudo docker images</li>
-        <li>docker search nginx</li>
-        <li>docker pull ubuntu/nginx</li>
-        <li>docker run -d --publish 8080:80 --name mywebserver nginx</li>
-        <li>docker ps --all</li>
-        <li>docker start &lt;container-id&gt;</li>
-        <li>docker stop &lt;container-name&gt;</li>
-        <li>docker rm &lt;name/container-id&gt;</li>
-        <li>docker rmi &lt;image-name&gt;</li>
-        <li>docker build --tag jeremy/customnginximage:1.0 myimage</li>
-        <li>nc localhost 8080</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h3>Virtual Machines (virsh)</h3>
-      <p class="summary">Use virsh to manage KVM/QEMU VMs defined via XML. Use virt-install to provision new VMs from cloud images or ISO files.</p>
-      <ul class="cmds">
-        <li>sudo apt install virt-manager</li>
-        <li>virsh define testmachine.xml</li>
-        <li>virsh list --all</li>
-        <li>virsh start TestMachine</li>
-        <li>virsh reboot TestMachine</li>
-        <li>virsh shutdown TestMachine</li>
-        <li>virsh destroy TestMachine</li>
-        <li>virsh undefine --remove-all-storage TestMachine</li>
-        <li>virsh autostart --disable TestMachine</li>
-        <li>virsh dominfo TestMachine</li>
-        <li>virsh setvcpus TestMachine 2 --config --maximum</li>
-        <li>virsh setmaxmem TestMachine 2048M --config</li>
-        <li>virsh console ubuntu1</li>
-      </ul>
-    </div>
-
   </div>
-  <a href="Operations_Deployment.pdf" class="pdf-link">📄 More notes (PDF)</a>
 </section>
-  <!-- USERS & GROUPS -->
-  <section class="section" id="users">
-    <div class="section-header">
-      <span class="section-num">03</span>
-      <h2>Users &amp; Groups</h2>
-    </div>
-    <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Proper user and group management is essential for system security and access control.</p>
-    <div class="card-grid">
-      <div class="card">
-        <h3>User Management</h3>
-        <ul class="bullets">
-          <li>Creating users with <code>useradd</code></li>
-          <li>Modifying user accounts with <code>usermod</code></li>
-          <li>Removing users using <code>userdel</code></li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Group Management</h3>
-        <ul class="bullets">
-          <li>Creating and deleting groups</li>
-          <li>Adding users to supplementary groups</li>
-          <li>Understanding primary vs secondary groups</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Password &amp; Authentication</h3>
-        <ul class="bullets">
-          <li>Password aging and expiration policies</li>
-          <li>Account locking and unlocking</li>
-          <li>Introduction to PAM</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>System Files</h3>
-        <ul class="bullets">
-          <li><code>/etc/passwd</code> structure</li>
-          <li><code>/etc/shadow</code> security considerations</li>
-          <li><code>/etc/group</code> usage</li>
-        </ul>
-      </div>
-    </div>
-    <a href="Essential_Commands.pdf" class="pdf-link">📄 More notes (PDF)</a>
-  </section>
 
-  <!-- NETWORKING -->
-  <section class="section" id="networking">
-    <div class="section-header">
-      <span class="section-num">04</span>
-      <h2>Networking</h2>
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="section-tag">Who I Am</p>
+      <h2>Independent tech professional building <em>real solutions</em></h2>
+      <p>SamatarSystems is my company — the home for everything I build, consult on, and teach. I work with clients to design IT infrastructure, craft purpose-built solutions, and support individuals through personal mentorship and guidance.</p>
+      <p>Beyond client work, I produce structured study guides that distill complex technical domains into clear, actionable learning paths — helping professionals level up on their own terms.</p>
     </div>
-    <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Networking skills are critical for configuring and troubleshooting Linux servers.</p>
-    <div class="card-grid">
-      <div class="card">
-        <h3>Network Configuration</h3>
-        <ul class="bullets">
-          <li>Assigning IP addresses</li>
-          <li>Configuring gateways and routes</li>
-          <li>Understanding DHCP vs static configuration</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Network Tools</h3>
-        <ul class="bullets">
-          <li>Testing connectivity with <code>ping</code></li>
-          <li>Inspecting sockets using <code>ss</code></li>
-          <li>Checking interfaces and routes</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Firewall Basics</h3>
-        <ul class="bullets">
-          <li>Understanding packet filtering</li>
-          <li>Allowing and blocking traffic</li>
-          <li>Basic security concepts</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>DNS &amp; Hostnames</h3>
-        <ul class="bullets">
-          <li>Hostname configuration</li>
-          <li>DNS resolution process</li>
-          <li>Troubleshooting name resolution</li>
-        </ul>
-      </div>
+    <div class="about-pills">
+      <div class="pill"><span class="pill-icon">⚡</span>Performance-First Engineering</div>
+      <div class="pill"><span class="pill-icon">🔒</span>Security by Design</div>
+      <div class="pill"><span class="pill-icon">☁️</span>Cloud-Native Approach</div>
+      <div class="pill"><span class="pill-icon">📈</span>Measurable Outcomes</div>
+      <div class="pill"><span class="pill-icon">🎯</span>Personal Mentorship</div>
+      <div class="pill"><span class="pill-icon">📚</span>Certification Ready</div>
     </div>
-    <a href="#" class="pdf-link">📄 More notes (PDF)</a>
-  </section>
+  </div>
+</section>
 
-  <!-- STORAGE -->
-  <section class="section" id="storage">
-    <div class="section-header">
-      <span class="section-num">05</span>
-      <h2>Storage</h2>
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <p class="section-tag">What I Do</p>
+      <h2>My <em>Core</em> Offerings</h2>
     </div>
-    <p style="font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;">Disk management and filesystem administration for production Linux environments.</p>
-    <div class="card-grid">
-      <div class="card">
-        <h3>Disk Management</h3>
-        <ul class="bullets">
-          <li>Identifying disks and partitions</li>
-          <li>Partitioning tools and concepts</li>
-          <li>Understanding disk layouts</li>
-        </ul>
+  </div>
+  <div class="services-grid">
+
+    <!-- IT Solutions -->
+    <div class="service-card">
+      <span class="service-num">01</span>
+      <span class="service-icon">🖥️</span>
+      <h3>IT Solutions</h3>
+      <p>End-to-end IT solutions tailored to your needs. From infrastructure design and deployment to troubleshooting and optimisation — I deliver reliable systems that keep your operations running smoothly.</p>
+      <div class="service-tags">
+        <span class="tag">Infrastructure</span>
+        <span class="tag">Networking</span>
+        <span class="tag">Cloud</span>
+        <span class="tag">Automation</span>
+        <span class="tag">DevOps</span>
       </div>
-      <div class="card">
-        <h3>Filesystems</h3>
-        <ul class="bullets">
-          <li>Creating filesystems</li>
-          <li>Mounting and unmounting filesystems</li>
-          <li>Persistent mounts using configuration files</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Logical Volume Manager</h3>
-        <ul class="bullets">
-          <li>Physical volumes, volume groups, logical volumes</li>
-          <li>Extending and reducing storage</li>
-          <li>Snapshots and use cases</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Swap &amp; Disk Usage</h3>
-        <ul class="bullets">
-          <li>Swap creation and management</li>
-          <li>Monitoring disk usage</li>
-          <li>Filesystem health checks</li>
-        </ul>
+      <div class="project-links">
+        <p class="project-link-label">Projects I've Built</p>
+        <a href="https://lfcs.netlify.app/" target="_blank" rel="noopener noreferrer" class="project-link">
+          <span class="project-link-left"><span class="project-dot"></span>LFCS Study Guide</span>
+          <span class="project-arrow">→</span>
+        </a>
+        <a href="https://AZ9001.netlify.app/" target="_blank" rel="noopener noreferrer" class="project-link">
+          <span class="project-link-left"><span class="project-dot"></span>Azure Fundamentals Guide</span>
+          <span class="project-arrow">→</span>
+        </a>
+        <a href="https://samatarsystems.netlify.app/" target="_blank" rel="noopener noreferrer" class="project-link">
+          <span class="project-link-left"><span class="project-dot"></span>SamatarSystems Website</span>
+          <span class="project-arrow">→</span>
+        </a>
       </div>
     </div>
-    <a href="#" class="pdf-link">📄 More notes (PDF)</a>
-  </section>
 
-</main>
+    <!-- Study Guides -->
+    <div class="service-card featured">
+      <span class="service-num">02</span>
+      <span class="service-icon">📚</span>
+      <h3>Study Guides</h3>
+      <p>In-depth, structured guides for technical certifications. I break complex exam domains into digestible, memorable material so you can pass with confidence and retain the knowledge that matters.</p>
+      <div class="service-tags">
+        <span class="tag">Linux</span>
+        <span class="tag">Azure</span>
+        <span class="tag">AWS</span>
+        <span class="tag">GCP</span>
+      </div>
+      <div class="study-guide-links">
+        <a href="https://lfcs.netlify.app/" target="_blank" rel="noopener noreferrer" class="guide-link">
+          <span class="guide-link-left">
+            <span class="guide-badge">LFCS</span>
+            Linux Foundation Certified Sysadmin
+          </span>
+          <span class="guide-arrow">→</span>
+        </a>
+        <a href="https://AZ9001.netlify.app/" target="_blank" rel="noopener noreferrer" class="guide-link">
+          <span class="guide-link-left">
+            <span class="guide-badge">AZ-900</span>
+            Azure Fundamentals Guide
+          </span>
+          <span class="guide-arrow">→</span>
+        </a>
+      </div>
+    </div>
 
+    <!-- Mentorship -->
+    <div class="service-card">
+      <span class="service-num">03</span>
+      <span class="service-icon">🎯</span>
+      <h3>Personal Mentorship & Guidance</h3>
+      <p>One-on-one mentorship for professionals looking to grow in tech. Whether you're pivoting careers, preparing for certifications, or navigating complex technical decisions — I'm with you every step of the way.</p>
+      <div class="service-tags">
+        <span class="tag">1-on-1 Sessions</span>
+        <span class="tag">Career Guidance</span>
+        <span class="tag">Cert Prep</span>
+        <span class="tag">Technical Growth</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-inner">
+    <p class="section-tag">How I Work</p>
+    <h2>A <em>Personal</em> Engagement Process</h2>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Discovery</h3>
+        <p>I take time to understand your infrastructure, goals, and pain points through focused technical discovery.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Strategy</h3>
+        <p>I design a tailored roadmap with clear milestones, timelines, and measurable outcomes — no bloated team overhead.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Execution</h3>
+        <p>I implement with precision, keeping you directly informed at every stage. You work with me, not a middleman.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Optimisation</h3>
+        <p>After delivery, I monitor, refine, and keep things running — as invested in the outcome as you are.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p class="section-tag">Get In Touch</p>
+      <h2>Let's build something <em>exceptional</em></h2>
+      <p>Have a project in mind, need expert guidance, or looking for a study guide? Reach out directly — you'll be talking to me, not a sales team.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="detail-icon">⏱</div>
+          <div class="detail-text">
+            <strong>Response Time</strong>
+            Within 24 hours
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="detail-icon">🌍</div>
+          <div class="detail-text">
+            <strong>Timezone</strong>
+            Available globally
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="detail-icon">📞</div>
+          <div class="detail-text">
+            <strong>First Call</strong>
+            Always free
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form" id="contactForm">
+
+      <!-- Toast notification -->
+      <div id="formToast" class="form-toast" aria-live="polite"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cf-name">Full Name <span class="req">*</span></label>
+          <input id="cf-name" type="text" placeholder="Your name" autocomplete="name">
+          <span class="field-err" id="err-name"></span>
+        </div>
+        <div class="form-group">
+          <label for="cf-email">Email Address <span class="req">*</span></label>
+          <input id="cf-email" type="email" placeholder="you@example.com" autocomplete="email">
+          <span class="field-err" id="err-email"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cf-company">Company</label>
+        <input id="cf-company" type="text" placeholder="Your company (optional)" autocomplete="organization">
+      </div>
+      <div class="form-group">
+        <label for="cf-service">Service Interest <span class="req">*</span></label>
+        <select id="cf-service">
+          <option value="" disabled selected>Select a service...</option>
+          <option>IT Solutions</option>
+          <option>Study Guides</option>
+          <option>Personal Mentorship &amp; Guidance</option>
+          <option>General Consulting</option>
+        </select>
+        <span class="field-err" id="err-service"></span>
+      </div>
+      <div class="form-group">
+        <label for="cf-message">Message <span class="req">*</span></label>
+        <textarea id="cf-message" placeholder="Tell me about your project or what you need help with..."></textarea>
+        <span class="field-err" id="err-message"></span>
+      </div>
+      <button id="submitBtn" class="btn-primary form-submit" type="button" onclick="sendMessage()">
+        <span id="btnText">Send Message →</span>
+        <span id="btnSpinner" class="btn-spinner" style="display:none">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          </svg>
+        </span>
+      </button>
+
+      <!-- Setup notice (remove once EmailJS is configured) -->
+      <p class="setup-notice" id="setupNotice">
+        ⚙️ <strong>Setup required:</strong> Replace <code>YOUR_PUBLIC_KEY</code>, <code>YOUR_SERVICE_ID</code>, and <code>YOUR_TEMPLATE_ID</code> in the script below with your <a href="https://www.emailjs.com" target="_blank" rel="noopener">EmailJS</a> credentials.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  © 2026 LFCS Study Website &nbsp;•&nbsp; Built for hands-on Linux mastery
+  <p>© 2025 SamatarSystems. Built by me, for you.</p>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </div>
 </footer>
+
+<!-- ─── EmailJS SDK ─── -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+  /* ── Form feedback styles ── */
+  .req { color: var(--accent); font-size: 0.85em; }
+
+  .field-err {
+    display: block;
+    font-size: 0.78rem;
+    color: #ff6b6b;
+    margin-top: 4px;
+    min-height: 1rem;
+    font-weight: 500;
+  }
+
+  input.invalid, textarea.invalid, select.invalid {
+    border-color: #ff6b6b !important;
+  }
+
+  input.valid, textarea.valid, select.valid {
+    border-color: var(--accent2) !important;
+  }
+
+  .btn-spinner svg {
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #submitBtn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Toast */
+  .form-toast {
+    border-radius: 8px;
+    padding: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.35s ease, padding 0.35s ease, margin 0.35s ease;
+  }
+  .form-toast.show {
+    max-height: 80px;
+    opacity: 1;
+    padding: 14px 18px;
+    margin-bottom: 1.25rem;
+  }
+  .form-toast.success {
+    background: rgba(0,212,170,0.12);
+    border: 1px solid rgba(0,212,170,0.35);
+    color: var(--accent2);
+  }
+  .form-toast.error {
+    background: rgba(255,107,107,0.12);
+    border: 1px solid rgba(255,107,107,0.35);
+    color: #ff6b6b;
+  }
+
+  /* Setup notice */
+  .setup-notice {
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    background: rgba(108,99,255,0.07);
+    border: 1px dashed rgba(108,99,255,0.3);
+    border-radius: 6px;
+    padding: 10px 14px;
+    line-height: 1.5;
+  }
+  .setup-notice a { color: var(--accent); }
+  .setup-notice code {
+    background: rgba(108,99,255,0.15);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.85em;
+  }
+</style>
+
+<script>
+  // ─────────────────────────────────────────────────
+  //  EmailJS Configuration
+  //  1. Sign up at https://www.emailjs.com (free)
+  //  2. Create a Service (Gmail, Outlook, etc.)
+  //  3. Create an Email Template — use these variables:
+  //       {{from_name}}  {{from_email}}  {{company}}
+  //       {{service}}    {{message}}
+  //  4. Replace the three constants below
+  // ─────────────────────────────────────────────────
+  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // Account > API Keys
+  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // Email Services tab
+  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // Email Templates tab
+
+  // Init EmailJS
+  (function() {
+    if (typeof emailjs !== 'undefined') {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    }
+  })();
+
+  // ── Validation helpers ──────────────────────────
+  function setFieldState(inputEl, errEl, msg) {
+    if (msg) {
+      inputEl.classList.add('invalid');
+      inputEl.classList.remove('valid');
+      errEl.textContent = msg;
+      return false;
+    }
+    inputEl.classList.remove('invalid');
+    inputEl.classList.add('valid');
+    errEl.textContent = '';
+    return true;
+  }
+
+  function validateForm() {
+    let ok = true;
+
+    const name    = document.getElementById('cf-name');
+    const email   = document.getElementById('cf-email');
+    const service = document.getElementById('cf-service');
+    const message = document.getElementById('cf-message');
+
+    if (!name.value.trim())
+      ok = setFieldState(name, document.getElementById('err-name'), 'Please enter your name.') && ok;
+    else
+      ok = setFieldState(name, document.getElementById('err-name'), '') && ok;
+
+    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.value.trim())
+      ok = setFieldState(email, document.getElementById('err-email'), 'Please enter your email.') && ok;
+    else if (!emailRx.test(email.value.trim()))
+      ok = setFieldState(email, document.getElementById('err-email'), 'Please enter a valid email address.') && ok;
+    else
+      ok = setFieldState(email, document.getElementById('err-email'), '') && ok;
+
+    if (!service.value)
+      ok = setFieldState(service, document.getElementById('err-service'), 'Please select a service.') && ok;
+    else
+      ok = setFieldState(service, document.getElementById('err-service'), '') && ok;
+
+    if (message.value.trim().length < 10)
+      ok = setFieldState(message, document.getElementById('err-message'), 'Message must be at least 10 characters.') && ok;
+    else
+      ok = setFieldState(message, document.getElementById('err-message'), '') && ok;
+
+    return ok;
+  }
+
+  // ── Live validation on blur ─────────────────────
+  ['cf-name','cf-email','cf-service','cf-message'].forEach(function(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('blur', validateForm);
+    el.addEventListener('input', function() {
+      if (el.classList.contains('invalid')) validateForm();
+    });
+  });
+
+  // ── Toast helper ────────────────────────────────
+  function showToast(msg, type) {
+    const t = document.getElementById('formToast');
+    t.textContent = msg;
+    t.className = 'form-toast show ' + type;
+    clearTimeout(t._timer);
+    if (type === 'success') {
+      t._timer = setTimeout(function() {
+        t.className = 'form-toast';
+      }, 6000);
+    }
+  }
+
+  // ── Main send function ──────────────────────────
+  function sendMessage() {
+    if (!validateForm()) {
+      // Scroll to first error
+      const firstErr = document.querySelector('.invalid');
+      if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const btn     = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('btnSpinner');
+
+    // Check EmailJS is configured
+    if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+      showToast('⚙️ EmailJS not configured yet — see setup instructions below the form.', 'error');
+      return;
+    }
+
+    // Loading state
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    spinner.style.display = 'inline-flex';
+
+    const params = {
+      from_name : document.getElementById('cf-name').value.trim(),
+      from_email: document.getElementById('cf-email').value.trim(),
+      company   : document.getElementById('cf-company').value.trim() || 'Not provided',
+      service   : document.getElementById('cf-service').value,
+      message   : document.getElementById('cf-message').value.trim(),
+    };
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+      .then(function() {
+        showToast('✅ Message sent! I\'ll be in touch within 24 hours.', 'success');
+        // Reset form
+        ['cf-name','cf-email','cf-company','cf-service','cf-message'].forEach(function(id) {
+          const el = document.getElementById(id);
+          el.value = '';
+          el.classList.remove('valid','invalid');
+        });
+        document.querySelectorAll('.field-err').forEach(function(e) { e.textContent = ''; });
+      })
+      .catch(function(err) {
+        console.error('EmailJS error:', err);
+        showToast('❌ Something went wrong. Please try again or email me directly.', 'error');
+      })
+      .finally(function() {
+        btn.disabled = false;
+        btnText.style.display = 'inline';
+        spinner.style.display = 'none';
+      });
+  }
+</script>
 
 </body>
 </html>
